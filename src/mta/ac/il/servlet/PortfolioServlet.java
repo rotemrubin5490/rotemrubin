@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import mta.ac.il.stock;
 import mta.ac.il.modle.Portfolio;
+import mta.ac.il.modle.Stock;
 import mta.ac.il.service.PortfolioService;
 
 @SuppressWarnings("serial")
@@ -16,7 +16,7 @@ import mta.ac.il.service.PortfolioService;
 			
 			PortfolioService portfolioService = new PortfolioService();
 			Portfolio portfolio = portfolioService.getPortfolio();
-			stock[] stocks = portfolio.getStocks();
+			Stock[] stocks = portfolio.getStocks();
 
 		
 			resp.setContentType("text/html");

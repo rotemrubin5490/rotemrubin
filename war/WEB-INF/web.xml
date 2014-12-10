@@ -4,15 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
-	<servlet>
-		<servlet-name>Rotemrubin</servlet-name>
-		<servlet-class>mta.ac.il.RotemrubinServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Rotemrubin</servlet-name>
-		<url-pattern>/rotemrubin</url-pattern>
-	</servlet-mapping>
-
+	
 	<servlet>
 		<servlet-name>PortfolioServlet</servlet-name>
 		<servlet-class>mta.ac.il.servlet.PortfolioServlet</servlet-class>
@@ -26,15 +18,5 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 
-
-	<servlet>
-		<servlet-name>StockDetailsServlet</servlet-name>
-		<servlet-class>mta.ac.il.StockDetailsServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>StockDetailsServlet</servlet-name>
-		<url-pattern>/stockDetailsServlet</url-pattern>
-	</servlet-mapping>
 
 </web-app>
