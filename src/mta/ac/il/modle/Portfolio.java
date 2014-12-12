@@ -3,25 +3,38 @@ package mta.ac.il.modle;
 import java.util.Date;
 
 public class Portfolio {
-	
-	private String title="exercise 5";
+
+	private String title="portfolio#1";
 	private final static int MAX_PORTFOLIO_SIZE=5;
 	private int portfolioSize=0;
+	private Stock[] stocks;
+	private StockStatus[] stocksStatus;
+	public Portfolio (){
+		
+		stocks=new Stock[MAX_PORTFOLIO_SIZE];
+
+		stocksStatus = new StockStatus[MAX_PORTFOLIO_SIZE];
+	}
 	
-	public String getTitle() {
+	public Portfolio (Portfolio portfolio){
+		setTitle(portfolio.getTitle());
+		//setPortfolioSize(portfolio.getPortfolioSize());
+		portfolioSize = portfolio.portfolioSize;
+
+		stocks = new Stock[MAX_PORTFOLIO_SIZE];
+		for (int i=0; i<3; i++)
+		{
+			stocks[i]=new Stock (portfolio.stocks[i]);
+		}
+	}
+	
+	public String getTitle()
+	{
 		return title;
 	}
-
+	
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public int getPortfolioSize() {
-		return portfolioSize;
-	}
-
-	public void setPortfolioSize(int portfolioSize) {
-		this.portfolioSize = portfolioSize;
 	}
 
 	public StockStatus[] getStocksStatus() {
@@ -31,45 +44,39 @@ public class Portfolio {
 	public void setStocksStatus(StockStatus[] stocksStatus) {
 		this.stocksStatus = stocksStatus;
 	}
+	
+	public int getPortfolioSize() {
+		return portfolioSize;
+	}
+
+	public void setPortfolioSize(int portfolioSize) {
+		this.portfolioSize = portfolioSize;
+	}
 
 	public void setStocks(Stock[] stocks) {
 		this.stocks = stocks;
 	}
 
-	public Portfolio (Portfolio portfolio){
-		setTitle(portfolio.getTitle());
-		setPortfolioSize(portfolio.getPortfolioSize());
-	}
-	
-	Stock[] stocks;
-	StockStatus[] stocksStatus;
-	
-	public Portfolio (){
-		stocks = new Stock[MAX_PORTFOLIO_SIZE];
-		stocksStatus = new StockStatus[MAX_PORTFOLIO_SIZE];
-
-	}
-	
 	public void addStock (Stock stock){
-		
+
 		stocks[portfolioSize] = stock;
 		portfolioSize++;
 	}
-	
+
 	public Stock[] getStocks(){
 		return stocks;
 	}
-	
+
 	public String getHtmlString (){
 		String res=new String();
 		res+= "<h1>" + title + "</h1>";
-		
+
 		for (int i=0; i<portfolioSize; i++){
 			res +=stocks[i].getHtmlDescription();
 		}
 		return res;
 	}
-	
+
 	public class StockStatus{
 		private final static int DO_NOTHING = 0;
 		private final static int BUY = 1;
@@ -115,7 +122,7 @@ public class Portfolio {
 		public void setStockQuantity(int stockQuantity) {
 			this.stockQuantity = stockQuantity;
 		}
-		
+
 		public StockStatus(StockStatus stockStatus){
 			setSymbol (stockStatus.getSymbol());
 			setCurrentBid (stockStatus.getCurrentBid());
@@ -124,8 +131,5 @@ public class Portfolio {
 			setRecommendation (stockStatus.getRecommendation());
 			setStockQuantity (stockStatus.getStockQuantity());
 		}
-
-		
 	}
-	
 }

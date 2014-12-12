@@ -1,10 +1,17 @@
 package mta.ac.il.service;
 
 import java.util.Calendar;
+
 import java.util.Date;
 
 import mta.ac.il.modle.Portfolio;
 import mta.ac.il.modle.Stock;
+
+/**
+ * this class manage our stock portfolio and update it's value.
+ * @author rotem rubin December 2014
+ *
+ */
 
 public class PortfolioService {
 	

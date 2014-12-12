@@ -13,14 +13,29 @@ import mta.ac.il.service.PortfolioService;
 @SuppressWarnings("serial")
 	public class PortfolioServlet extends HttpServlet {
 		public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-			
-			PortfolioService portfolioService = new PortfolioService();
-			Portfolio portfolio = portfolioService.getPortfolio();
-			Stock[] stocks = portfolio.getStocks();
-
-		
 			resp.setContentType("text/html");
-			resp.getWriter().println(portfolio.getHtmlString());
+
+			PortfolioService portfolioService = new PortfolioService();
+			Portfolio portfolio1 = portfolioService.getPortfolio();
+			
+			Portfolio portfolio2= new Portfolio(portfolio1);
+			portfolio2.setTitle("portfolio#2");
+			portfolio2.getStocks()[2].setBid(55.55f);
+			
+			
+			/**
+			 * print protfolio1 details
+			 * @author rotem rubin December 2014
+			 *
+			 */
+			
+			resp.getWriter().println(portfolio1.getHtmlString());
+			/**
+			 * print protfolio2 details
+			 * @author rotem rubin December 2014
+			 *
+			 */
+			resp.getWriter().println(portfolio2.getHtmlString());
 			
 		}
 

@@ -2,6 +2,11 @@ package mta.ac.il.modle;
 
 import java.util.Date;
 
+/**
+ * we define the members of every stock
+ * @author rotem rubin December 2014
+ */
+
 public class Stock {
 	private String symbol;
 	private float ask;
@@ -31,6 +36,14 @@ public class Stock {
 	public void setDate(java.util.Date date) {
 		this.date = date;
 	}
+	
+	/** the method returns an html:
+	 * in bold- the stock's name
+	 * not in bold- the value of the stock
+	 * with spaces
+	 * rotem rubin- December 2014 
+	 * @return
+	 */
 
 	public String getHtmlDescription(){
 		String res = "<b>Stock symbol: </b>"+symbol+ " <b> Ask </b> :"  + ask + "<b> Bid: </b>" + bid + " <b>Date:</b> " + getDate() +"<br>";
