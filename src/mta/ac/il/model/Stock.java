@@ -1,4 +1,4 @@
-package mta.ac.il.modle;
+package mta.ac.il.model;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ public class Stock {
 	private float ask;
 	private float bid;
 	private java.util.Date date;
-	public String getSymbole() {
+	public String getSymbol() {
 		return symbol;
 	}
 	public void setSymbol(String symbol) {
@@ -52,7 +52,7 @@ public class Stock {
 	
 
 	public Stock (Stock stock){
-		setSymbol (stock.getSymbole());
+		setSymbol (stock.getSymbol());
 		setAsk (stock.getAsk());
 		setBid (stock.getBid());
 		date= new Date (stock.date.getTime());
