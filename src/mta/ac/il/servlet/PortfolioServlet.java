@@ -29,11 +29,7 @@ public class PortfolioServlet extends HttpServlet {
 		 */
 
 			resp.getWriter().println(portfolio1.getHtmlString());
-		/**
-		 * print protfolio2 details
-		 * @author rotem rubin December 2014
-		 *
-		 */
+	
 
 	}
 

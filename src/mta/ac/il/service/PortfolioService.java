@@ -31,6 +31,7 @@ public class PortfolioService {
 		c.set(2014, 11, 15, 00, 00, 00);
 		Date date = c.getTime();
 		Stock1.setDate(date);
+		
 		myPortfolio.addStock(Stock1);
 
 		Stock Stock2 = new Stock();
