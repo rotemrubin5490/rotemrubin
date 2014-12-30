@@ -78,7 +78,7 @@ public class Portfolio {
 
 		for (int i=0; i<portfolioSize; i++){
 			if(stocksStatus[i]!=null){
-				if (stock.getSymbol()==stocksStatus[i].getSymbol()){
+				if  (stock.getSymbol().equals(stocksStatus[i].getSymbol())){
 					System.out.println("You already have " +stock.getSymbol()+ "stock");
 					flag=false;
 					break;
@@ -116,7 +116,6 @@ public class Portfolio {
 
 		else if (placeOfStock(symbol)!= -2)
 		{
-			//temp= placeOfStock(symbol);
 			sellStock(symbol, -1);
 
 			if(placeOfStock(symbol)!= (portfolioSize-1))
@@ -228,7 +227,7 @@ public class Portfolio {
 	public int placeOfStock(String symbol){
 		int index=-2;
 		for(int i=0; i<portfolioSize; i++){
-			if(stocksStatus[i].getSymbol()==symbol){
+			if(stocksStatus[i].getSymbol().equals(symbol)){
 				index=i;
 				break;
 			}
