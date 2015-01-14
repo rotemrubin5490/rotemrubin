@@ -2,6 +2,11 @@ package mta.ac.il.model;
 
 import java.util.Date;
 
+import rotemrubin.exception.BalanceException;
+import rotemrubin.exception.PortfolioFullException;
+import rotemrubin.exception.StockAlreadyExistsException;
+import rotemrubin.exception.StockNotExistException;
+
 public class Portfolio {
 
 	public enum ALGO_RECOMMENDATION {DO_NOTHING, BUY, SELL}
@@ -67,9 +72,8 @@ public class Portfolio {
 		this.balance = balance;
 	}
 
-	public void addStock (Stock stock){
-
-
+	public void addStock (Stock stock)throws StockAlreadyExistsException, PortfolioFullException
+{
 		boolean flag=true;
 
 		for (int i=0; i<portfolioSize; i++){
@@ -77,13 +81,14 @@ public class Portfolio {
 				if  (stock.getSymbol().equals(stocksStatus[i].getSymbol())){
 					System.out.println("You already have " +stock.getSymbol()+ "stock");
 					flag=false;
-					break;
+					throw new StockAlreadyExistsException(stock.getSymbol());
 				}
 			}
 		}
 
 		if (portfolioSize>=MAX_PORTFOLIO_SIZE && flag==true){
 			System.out.println("can't add new stock,portfolio can only have "+ MAX_PORTFOLIO_SIZE +" stocks");
+			throw new PortfolioFullException();
 		}
 
 		else if (portfolioSize<MAX_PORTFOLIO_SIZE && flag==true){
@@ -100,12 +105,11 @@ public class Portfolio {
 			System.out.println("Stock "+stocksStatus[portfolioSize-1].getSymbol()+" added successfuly!");}
 	}
 
-	public boolean removeStock (String symbol){
-		boolean flag=true;
+	public void removeStock (String symbol)throws StockNotExistException{
 
 		if (placeOfStock(symbol)==-2){
 			System.out.println("the stock "+symbol+ " doesn't exsit in your portfolio. please enter a valid stock symbol. ");
-			flag=false; 
+			throw new StockNotExistException(symbol);
 		}
 
 		else if (placeOfStock(symbol)!= -2)
@@ -124,17 +128,16 @@ public class Portfolio {
 			}
 			portfolioSize--;
 			System.out.println("Stock " + symbol +" removed successfuly!");
-			flag=true; 
 		}
-		return flag;
 	}
 
-	public boolean sellStock(String symbol, int quantity)
+	public void sellStock(String symbol, int quantity) throws StockNotExistException
 	{
 		boolean flag=true;
 		if(placeOfStock(symbol)==-2){
 			System.out.println("there is no stock with that name, please enter valid name. ");
 			flag=false; 
+			throw new StockNotExistException(symbol);
 		}
 		else if(stocksStatus[placeOfStock(symbol)].getStockQuantity()>=quantity&&(quantity!=-1)&& flag==true){
 			balance=balance+(quantity * stocksStatus[placeOfStock(symbol)].getBid());
@@ -156,15 +159,15 @@ public class Portfolio {
 			System.out.println("this quantity is not legal, please enter a quantity bigger than 0");
 			flag=false;
 		}
-		return flag;
 	}
 
-	public boolean buyStock(String symbol,int quantity){
+	public void buyStock(String symbol,int quantity) throws BalanceException, StockNotExistException{
 		boolean flag=true;
 
 		if(placeOfStock(symbol)==-2){
 			System.out.println("there is no stock with that name, please enter valid name. ");
 			flag=false;
+			throw new StockNotExistException(symbol);
 		}
 		if(quantity<-1){
 			System.out.println("this quantity is not legal, please enter a quantity bigger than 0");
@@ -174,13 +177,13 @@ public class Portfolio {
 		else if(balance<stocksStatus[placeOfStock(symbol)].getAsk()*quantity){
 			System.out.println("Not enough balance to complete purchase");
 			flag=false;
+			throw new BalanceException();
 		}
 		else if (balance>=stocksStatus[placeOfStock(symbol)].getAsk()*quantity && flag==true){
 
 			balance=balance-stocksStatus[placeOfStock(symbol)].getAsk()*quantity;
 			stocksStatus[placeOfStock(symbol)].setStockQuantity(stocksStatus[placeOfStock(symbol)].getStockQuantity()+quantity);
 			System.out.println("you bought the stock "+symbol+" !");
-			return true;
 		}
 		else if(quantity==-1)
 		{
@@ -191,7 +194,6 @@ public class Portfolio {
 			flag=true;
 		}
 
-		return flag;
 	}
 
 	public float getStocksValue(){

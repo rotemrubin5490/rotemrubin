@@ -3,6 +3,10 @@ package mta.ac.il.service;
 import java.util.Calendar;
 import java.util.Date;
 
+import rotemrubin.exception.BalanceException;
+import rotemrubin.exception.PortfolioFullException;
+import rotemrubin.exception.StockAlreadyExistsException;
+import rotemrubin.exception.StockNotExistException;
 import mta.ac.il.model.Portfolio;
 import mta.ac.il.model.Stock;
 
@@ -14,11 +18,12 @@ import mta.ac.il.model.Stock;
 
 public class PortfolioService {
 
-	public Portfolio getPortfolio(){
+	public Portfolio getPortfolio()throws StockAlreadyExistsException, PortfolioFullException, StockNotExistException, BalanceException
+{
 
 		Portfolio myPortfolio = new Portfolio();
 
-		myPortfolio.setTitle("exe 7 porfolio");
+		myPortfolio.setTitle("exe 9 porfolio");
 		myPortfolio.updateBalance(10000);
 
 		Stock Stock1 = new Stock();
@@ -63,6 +68,7 @@ public class PortfolioService {
 		myPortfolio.buyStock("CAAS", 40);
 		myPortfolio.sellStock("AAL", -1);
 		myPortfolio.removeStock("CAAS");
+		myPortfolio.addStock(Stock2);
 
 		return myPortfolio;
 	}
