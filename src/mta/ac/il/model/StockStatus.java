@@ -27,6 +27,10 @@ public class StockStatus extends Stock {
 		this.stockQuantity = stocksStatus.getStockQuantity();
 	}
 	
+	public StockStatus(Stock stock) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public ALGO_RECOMMENDATION getRecommendation() {
 		return recommendation;
 	}

@@ -1,16 +1,17 @@
 package mta.ac.il.model;
 
 import java.util.Date;
+import java.util.List;
 
-import rotemrubin.exception.BalanceException;
-import rotemrubin.exception.PortfolioFullException;
-import rotemrubin.exception.StockAlreadyExistsException;
-import rotemrubin.exception.StockNotExistException;
+import exception.BalanceException;
+import exception.PortfolioFullException;
+import exception.StockAlreadyExistsException;
+import exception.StockNotExistsException;
 
 public class Portfolio {
 
 	public enum ALGO_RECOMMENDATION {DO_NOTHING, BUY, SELL}
-	private final static int MAX_PORTFOLIO_SIZE=5;
+	public final static int MAX_PORTFOLIO_SIZE=5;
 	private String title="rotem's portfolio";
 	private int portfolioSize=0;
 	private StockStatus[] stocksStatus;
@@ -25,7 +26,10 @@ public class Portfolio {
 	 * my copy constructor
 	 * @param portfolio
 	 */
-
+	public Portfolio(List<StockStatus> stockStatuses){
+		this();
+		stockStatuses.toArray(this.stocksStatus);
+		}
 	public Portfolio (Portfolio portfolio){
 		setTitle(portfolio.getTitle());
 		portfolioSize = portfolio.portfolioSize;
@@ -105,11 +109,11 @@ public class Portfolio {
 			System.out.println("Stock "+stocksStatus[portfolioSize-1].getSymbol()+" added successfuly!");}
 	}
 
-	public void removeStock (String symbol)throws StockNotExistException{
+	public void removeStock (String symbol)throws StockNotExistsException{
 
 		if (placeOfStock(symbol)==-2){
 			System.out.println("the stock "+symbol+ " doesn't exsit in your portfolio. please enter a valid stock symbol. ");
-			throw new StockNotExistException(symbol);
+			throw new StockNotExistsException(symbol);
 		}
 
 		else if (placeOfStock(symbol)!= -2)
@@ -131,13 +135,13 @@ public class Portfolio {
 		}
 	}
 
-	public void sellStock(String symbol, int quantity) throws StockNotExistException
+	public void sellStock(String symbol, int quantity) throws StockNotExistsException
 	{
 		boolean flag=true;
 		if(placeOfStock(symbol)==-2){
 			System.out.println("there is no stock with that name, please enter valid name. ");
 			flag=false; 
-			throw new StockNotExistException(symbol);
+			throw new StockNotExistsException(symbol);
 		}
 		else if(stocksStatus[placeOfStock(symbol)].getStockQuantity()>=quantity&&(quantity!=-1)&& flag==true){
 			balance=balance+(quantity * stocksStatus[placeOfStock(symbol)].getBid());
@@ -161,13 +165,13 @@ public class Portfolio {
 		}
 	}
 
-	public void buyStock(String symbol,int quantity) throws BalanceException, StockNotExistException{
+	public void buyStock(String symbol,int quantity) throws BalanceException, StockNotExistsException{
 		boolean flag=true;
 
 		if(placeOfStock(symbol)==-2){
 			System.out.println("there is no stock with that name, please enter valid name. ");
 			flag=false;
-			throw new StockNotExistException(symbol);
+			throw new StockNotExistsException(symbol);
 		}
 		if(quantity<-1){
 			System.out.println("this quantity is not legal, please enter a quantity bigger than 0");
@@ -228,7 +232,7 @@ public class Portfolio {
 	}
 
 
-	public Stock[] getStocks(){
+	public StockStatus[] getStocks(){
 		return stocksStatus;
 	}
 
@@ -256,6 +260,16 @@ public class Portfolio {
 			System.out.println("the value of the balance has not changed");
 		}
 		return balance;
+	}
+
+	public StockStatus findBySymbol(String symbol) {
+		for(int i=0; i<portfolioSize; i++)
+		{
+			if (symbol.equals(stocksStatus[i].getSymbol())){
+				return stocksStatus[i];
+			}
+		}
+		return null;
 	}
 
 }
